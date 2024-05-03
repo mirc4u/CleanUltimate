@@ -1,81 +1,58 @@
 @echo off
 color 9
 title Clean Ultimate
-set version=1.9
+set version=1.1
 cd %tmp%
 setlocal EnableDelayedExpansion
-::Text Color Red
-set col1=[91m
-::Highlight Color Blue
-set col2=[94m
 
-) else (
-::Text Color White
-set col1=[97m
-::Highlight Color Red
-set col2=[31m
+set final=[0m
+set red=[31m
+set green=[32m
+set black=[30m
+set white=[37m
+set cian=[36m
+set magent=[35m
+set yellow=[33m
+set blue=[44m
+set blue1=[94m
 
-::Get Admin Rights
 rmdir %SystemDrive%\Windows\system32\adminrightstest >nul 2>&1
 mkdir %SystemDrive%\Windows\system32\adminrightstest >nul 2>&1
 if %errorlevel% neq 0 (
 powershell -NoProfile -NonInteractive -Command start -verb runas "'%~s0'" >nul 2>&1
 if !errorlevel! equ 0 exit /b
 echo.
-echo             %col2%CleanUltimate is not running as Admin!
-echo      Optimization did not work correctly. Continue anyway?%col1%
+echo               %red%CleanUltimate is not running as Admin!%final%
+echo         %red%Optimization did not work correctly. Continue anyway?%final%
 echo.
 choice /c:"CQ" /n /m "%BS%               [C] Continue  [Q] Quit" & if !errorlevel! equ 2 exit /b
 )
-
 :loading
+title  . . .
 cls
 color 9
 echo.
-echo    ______________                        _____  ________________                  _____      
-echo    __  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ 
-echo    _  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \
-echo    / /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/
-echo    \____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ 
+echo    [34m______________                        _____  ________________                  _____      [0m
+echo    [34m__  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ [0m    
+echo    [94m_  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \[0m
+echo    [36m/ /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/[0m
+echo    [36m\____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ [0m
 echo.
-echo                                   %col1%Loading Scripts [...]%col1%
+echo                                   Looking for updates [...]
 echo.
-timeout /t 1 /nobreak>nul
-cls
-color 9
-echo.
-echo    ______________                        _____  ________________                  _____      
-echo    __  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ 
-echo    _  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \
-echo    / /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/
-echo    \____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ 
-echo.
-echo                                   %col1%Loading Settings [...]%col1%                                
-echo.
-timeout /t 1 /nobreak>nul
-cls
-color 9
-echo.
-echo    ______________                        _____  ________________                  _____      
-echo    __  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ 
-echo    _  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \
-echo    / /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/
-echo    \____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ 
-echo.
+timeout /t 2 /nobreak>nul
 
-:checkupdate
-color 9
-curl -g -k -L -# -o "%tmp%\latestVersion.bat" "https://raw.githubusercontent.com/Mircau123/CleanUltimate/main/Clean" >nul 2>&1
+curl -g -k -L -# -o "%tmp%\latestVersion.bat" "https://raw.githubusercontent.com/mirc4u/CleanUltimate/main/README.md" >nul 2>&1
 call "%tmp%\latestVersion.bat"
 if "%Version%" lss "!latestVersion!" (
-
 	echo.
-	echo                      %col1%CleanUltimate isn't updated. Do you want to update?%col2%
+	echo                    %red%CleanUltimate It is outdated. Would you like to update?%final%
 	echo.
-	choice /c:"YN" /n /m "                      %BS%                      [Y] Yes  [N] No"
+	choice /c:"YN" /n /m "%BS%                   [Y] Yes  [N] No"
 	if !errorlevel! equ 1 (
-		curl -L -o "%~s0" "colocar link dps" >nul 2>&1
+		start https://github.com/mirc4u/CleanUltimate/releases/latest/download/CleanUltimate.bat 
 		call "%~s0"
+        goto main
 	)
 )
 
@@ -84,42 +61,56 @@ cls
 title CleanUltimate
 color 9
 echo.
-echo    ______________                        _____  ________________                  _____      
-echo    __  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ 
-echo    _  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \
-echo    / /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/
-echo    \____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ 
+echo    [34m______________                        _____  ________________                  _____      [0m
+echo    [34m__  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ [0m    
+echo    [94m_  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \[0m
+echo    [36m/ /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/[0m
+echo    [36m\____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ [0m%yellow%%version%%final%
 echo.
-echo                            %col1%1 [Optimizer]    2 [Apps]    3 [Config]%col1%                               
+echo                         1 %green%[Boost]%final%    2 %magent%[Apps]%final%    3 %cian%[Config]%final%    4 %red%[Exit]%final%                             
 echo.
-
 set /p main= Select:
-
 if %main% equ 1 goto optimizer
 if %main% equ 2 goto apps
 if %main% equ 3 goto config
+if %main% equ 4 goto exit
 echo.
-echo    %col2%Option not found. Press any key to try again . . .%col1%
+echo    %red%Option not found. Press any key to try again . . .%final%
 echo.
 pause>nul
 goto main
 
-:config
+:exit
 cls
 color 9
 echo.
-echo    ______________                        _____  ________________                  _____      
-echo    __  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ 
-echo    _  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \
-echo    / /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/
-echo    \____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/                      
+echo    [34m______________                        _____  ________________                  _____      [0m
+echo    [34m__  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ [0m    
+echo    [94m_  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \[0m
+echo    [36m/ /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/[0m
+echo    [36m\____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ [0m
 echo.
-echo                       %col1%1 [Update]    2 [Discord]    3 [Back]%version%%col2% 
+echo    %red%Exiting . . .%red%
+echo.
+timeout /t 1 /nobreak>nul
+exit
+
+:config
+cls
+title Config
+color 9
+echo.
+echo    [34m______________                        _____  ________________                  _____      [0m
+echo    [34m__  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ [0m    
+echo    [94m_  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \[0m
+echo    [36m/ /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/[0m
+echo    [36m\____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ [0m%yellow%%version%%final%                 
+echo.
+echo                               1 %green%[Update]%final%    2 %magent%[Site]%final%    3 %red%[Back]%final%
 echo.
 set /p main= Select:
-
 if %main% equ 1 goto update
-if %main% equ 2 goto discord
+if %main% equ 2 goto site
 if %main% equ 3 goto main
 echo.
 echo    %col2%Option not found. Press any key to try again . . .%col1%
@@ -127,35 +118,23 @@ echo.
 pause>nul
 goto config
 
-:discord
-start https://discord.gg/4sN8rz867W
+:update
+cls
+start https://github.com/mirc4u/CleanUltimate
+goto config
+
+:site
+msg * Coming soon . . .
 goto config
 
 :apps
 msg * Em breve!
 goto main
-cls
-color 9
-echo.
-echo    ______________                        _____  ________________                  _____      
-echo    __  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ 
-echo    _  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \
-echo    / /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/
-echo    \____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ 
-echo.
 
 :optimizer
 cls
-color 9
-echo.
-echo    ______________                        _____  ________________                  _____      
-echo    __  ____/__  /__________ _______      __  / / /__  /_  /___(_)______ _________ __  /_____ 
-echo    _  /    __  /_  _ \  __ `/_  __ \     _  / / /__  /_  __/_  /__  __ `__ \  __ `/  __/  _ \
-echo    / /___  _  / /  __/ /_/ /_  / / /     / /_/ / _  / / /_ _  / _  / / / / / /_/ // /_ /  __/
-echo    \____/  /_/  \___/\__,_/ /_/ /_/      \____/  /_/  \__/ /_/  /_/ /_/ /_/\__,_/ \__/ \___/ 
-echo.
-echo
 title Process . . . 0%%%
+call:ECHOX Removing Windows Defender
 powercfg.exe /hibernate off
 sc config wuauserv start= disabled
 sc stop wuauserv
@@ -165,6 +144,103 @@ schtasks /Change /TN "Microsoft\Windows\AppID\SmartScreenSpecific" /Disable
 schtasks /Change /TN "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /Disable
 schtasks /Change /TN "Microsoft\Windows\Application Experience\ProgramDataUpdater" /Disable
 schtasks /Change /TN "Microsoft\Windows\Application Experience\StartupAppTask" /Disable
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v "DelayedDesktopSwitchTimeout" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Serialize" /v "StartupDelayInMSec" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKU\!USER_SID!\Control Panel\Desktop" /v "AutoEndTasks" /t REG_SZ /d "1" /f >nul 2>&1
+reg add "HKU\!USER_SID!\Control Panel\Desktop" /v "HungAppTimeout" /t REG_SZ /d "1000" /f >nul 2>&1
+reg add "HKU\!USER_SID!\Control Panel\Desktop" /v "WaitToKillServiceTimeout" /t REG_SZ /d "2000" /f >nul 2>&1
+netsh int tcp set global ecncapability=disabled >nul 2>&1
+netsh int tcp set global dca=enabled >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Reporting" /v "DisableGenericRePorts" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "LocalSettingOverrideSpynetReporting" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SpynetReporting" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v "DontReportInfectionInformation" /t REG_DWORD /d "1" /f >nul 2>&1
+netsh int tcp set global netdma=enabled >nul 2>&1
+netsh int tcp set global rsc=disabled >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "AllowOnlineTips" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoInternetOpenWith" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoOnlinePrintsWizard" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoPublishingWizard" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoWebServices" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideFileExt" /t REG_DWORD /d "0" /f >nul 2>&1
+bcdedit /set quietboot On >nul 2>&1
+bcdedit /set bootuxdisabled On >nul 2>&1
+bcdedit /set {globalsettings} custom:16000067 true >nul 2>&1
+bcdedit /set {globalsettings} custom:16000068 true >nul 2>&1
+bcdedit /set {globalsettings} custom:16000069 true >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Browser" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Policies\Microsoft\Windows\Explorer" /v "DisableSearchBoxSuggestions" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEnabled" /t REG_DWORD /d "0" /f >nul 2>&1
+netsh int tcp set global rss=enabled >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Internet Explorer\Main" /v "Autorun" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoAutorun" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoAutoplayfornonVolume" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "NoDriveTypeAutoRun" /t REG_DWORD /d "255" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v "DontSetAutoplayCheckbox" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers" /v "DisableAutoplay" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform" /v "NoGenTicket" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\Software Protection Platform" /v "AllowWindowsEntitlementReactivation" /t REG_DWORD /d "1" /f >nul 2>&1
+netsh int tcp set global timestamps=disabled >nul 2>&1
+netsh int tcp set global initialRto=2000 >nul 2>&1
+netsh int tcp set global nonsackrttresiliency=disabled >nul 2>&1
+netsh int tcp set global maxsynretransmissions=2 >nul 2>&1
+netsh int tcp set security mpp=disabled >nul 2>&1
+netsh int tcp set security profiles=disabled >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\WerSvc" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\wercplsupport" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting" /v "DoReport" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v "Disabled" /t REG_DWORD /d "1" /f >nul 2>&1
+netsh int tcp set heuristics disabled >nul 2>&1
+netsh int ip set global neighborcachelimit=4096 >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "LimitEnhancedDiagnosticDataWindowsAnalytics" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+call:POWERSHELL "Set-NetTCPSetting -SettingName InternetCustom -MinRto 300"
+call:POWERSHELL "Set-NetTCPSetting -SettingName InternetCustom -InitialCongestionWindow 10"
+call:POWERSHELL "Set-NetOffloadGlobalSetting -Chimney Disabled"
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "DefaultTTL" /t REG_DWORD /d "64" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "Tcp1323Opts" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "TcpMaxDupAcks" /t REG_DWORD /d "2" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "SackOpts" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "MaxUserPort" /t REG_DWORD /d "65534" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" /v "TcpTimedWaitDelay" /t REG_DWORD /d "30" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v "UseDelayedAcceptance" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v "MaxSockAddrLength" /t REG_DWORD /d "16" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Winsock" /v "MinSockAddrLength" /t REG_DWORD /d "16" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "LocalPriority" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Siuf\Rules" /v "NumberOfSIUFInPeriod" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Siuf\Rules" /v "PeriodInNanoSeconds" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKU\!USER_SID!\SOFTWARE\Microsoft\Windows\CurrentVersion\CDP" /v "RomeSdkChannelUserAuthzPolicy" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "DoNotShowFeedbackNotifications" /t REG_DWORD /d "1" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "HostsPriority" /t REG_DWORD /d "5" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "DnsPriority" /t REG_DWORD /d "6" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "NetbtPriority" /t REG_DWORD /d "7" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation" /v "DisableStartupSound" /t REG_DWORD /d "1" /f >nul 2>&1
+call:POWERSHELL "Disable-MMAgent -MemoryCompression"
+call:POWERSHELL "Disable-MMAgent -PageCombining"
+taskkill /f /im "OneDrive.exe" >nul 2>&1
+if exist "%WinDir%\System32\OneDriveSetup.exe" start /wait "%WinDir%\System32\OneDriveSetup.exe" /uninstall >nul 2>&1
+if exist "%WinDir%\SysWOW64\OneDriveSetup.exe" start /wait "%WinDir%\SysWOW64\OneDriveSetup.exe" /uninstall >nul 2>&1
+rd /s /q "%UserProfile%\OneDrive" >nul 2>&1
+rd /s /q "%SystemDrive%\OneDriveTemp">nul 2>&1
+rd /s /q "%LocalAppData%\Microsoft\OneDrive" >nul 2>&1
+rd /s /q "%ProgramData%\Microsoft OneDrive" >nul 2>&1
+reg delete "HKCR\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >nul 2>&1
+reg delete "HKCR\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /f >nul 2>&1
+call "resources/install_wim_tweak.exe" /o /c Microsoft-Windows-OneDrive-Setup-Package /r >nul 2>&1
+call "resources/install_wim_tweak.exe" /o /c Microsoft-Windows-OneDrive-Setup-WOW64-Package /r >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\memory management\prefetchparameters" /v "EnableBoottrace" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\memory management\prefetchparameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\memory management\prefetchparameters" /v "EnableSuperfetch" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction" /v "Enable" /t REG_SZ /d "N" /f >nul 2>&1
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OptimalLayout" /v "EnableAutoLayout" /t REG_DWORD /d "0" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\SysMain" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\FontCache" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\Class\{71a27cdd-812a-11d0-bec7-08002be2092f}" /v "LowerFilters" /t REG_MULTI_SZ /d "" /f >nul 2>&1
+reg add "HKLM\SYSTEM\CurrentControlSet\Services\rdyboost" /v "Start" /t REG_DWORD /d "4" /f >nul 2>&1
 schtasks /Change /TN "Microsoft\Windows\Autochk\Proxy" /Disable
 schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" /Disable
 schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask" /Disable
@@ -172,11 +248,28 @@ schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\
 schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\Uploader" /Disable
 schtasks /Change /TN "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" /Disable
 schtasks /Change /TN "Microsoft\Windows\Maintenance\WinSAT" /Disable
+Reg add "HKLM\System\CurrentControlSet\Services\NetBT\Parameters\Interfaces" /v "NetbiosOptions" /t REG_DWORD /d "2" /f
 schtasks /Change /TN "Microsoft\Windows\Shell\FamilySafetyUpload" /Disable
 schtasks /Change /TN "Microsoft\Windows\SystemRestore\SR" /Disable
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\IntelPPM" /v Start /t REG_DWORD /d 3 /f
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\AmdPPM" /v Start /t REG_DWORD /d 3 /f
+Reg add "HKLM\System\CurrentControlSet\Services\MMCSS" /v "Start" /t REG_DWORD /d "4" /f
+Reg add "HKLM\SYSTEM\CurrentControlSet\Enum\%%i\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties" /v "MessageNumberLimit" /f
+bcdedit /set tscsyncpolicy legacy
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "LocalPriority" /t REG_DWORD /d "4" /f 
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "HostsPriority" /t REG_DWORD /d "5" /f 
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "DnsPriority" /t REG_DWORD /d "6" /f 
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\ServiceProvider" /v "NetbtPriority" /t REG_DWORD /d "7" /f 
+Reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NoLazyMode" /t REG_DWORD /d "1" /f 
+Reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "LazyModeTimeout" /t REG_DWORD /d "10000" /f 
+Reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Latency Sensitive" /t REG_SZ /d "True" /f 
+Reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "NoLazyMode" /t REG_DWORD /d "1" /f 
 schtasks /Change /TN "Microsoft\Office\Office Automatic Updates 2.0" /Disable
 schtasks /Change /TN "Microsoft\Office\Office ClickToRun Service Monitor" /Disable
+Reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" /v "DistributeTimers" /t REG_DWORD /d "1" /f
 schtasks /Change /TN "Microsoft\Office\Office Feature Updates" /Disable
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\GpuEnergyDrv" /v "Start" /t REG_DWORD /d "4" /f
+Reg add "HKLM\SYSTEM\CurrentControlSet\Services\GpuEnergyDr" /v "Start" /t REG_DWORD /d "4" /f 
 schtasks /Change /TN "Microsoft\Office\Office Feature Updates Logon" /Disable
 schtasks /Change /TN "\Microsoft\Windows\Power Efficiency Diagnostics\AnalyzeSystem" /Disable
 schtasks /Change /TN "MicrosoftEdgeUpdateTaskMachineCore" /Disable
@@ -255,9 +348,6 @@ rd /s /q c:\windows\temp
 md c:\windows\temp
 del /s /f /q C:\WINDOWS\Prefetch
 del /s /f /q C:\Windows\SoftwareDistribution\Download
-del /s /f /q %temp%\*.*
-rd /s /q %temp%
-md %temp%
 del c:\WIN386.SWP
 net stop wuauserv
 net stop UsoSvc
@@ -284,14 +374,6 @@ PowerShell -Command "Get-AppxPackage *WindowsPhone* | Remove-AppxPackage"
 PowerShell -Command "Get-AppxPackage *SkypeApp* | Remove-AppxPackage"
 PowerShell -Command "Get-AppxPackage *WindowsSoundRecorder* | Remove-AppxPackage"
 PowerShell -Command "Get-AppxPackage *windowscommunicationsapps* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.Xbox.TCUI* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.XboxApp* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.XboxGameCallableUI* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.XboxGameOverlay* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.XboxGamingOverlay* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.XboxIdentityProvider* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.XboxLive* | Remove-AppxPackage"
-PowerShell -Command "Get-AppxPackage *Microsoft.XboxSpeechToTextOverlay* | Remove-AppxPackage"
 bcdedit /set useplatformclock No 
 bcdedit /set allowedinmemorysettings 0
 bcdedit /deletevalue useplatformtick 
@@ -424,3 +506,4 @@ for /f "tokens=2 delims==" %%a in ('wmic os get TotalVisibleMemorySize /format:v
 reg add "hklm\system\currentcontrolset\control" /v "svchostsplitthresholdinkb" /t reg_dword /d "%ram%" /f
 title Process . . . 100%%%
 msg * Boost Finish! Restart PC.
+goto main
